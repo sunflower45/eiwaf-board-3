@@ -54,6 +54,10 @@
 		
 		
 		$("#btnReply").click(function(){
+			if($("#replyText").val() == "" || $("#replyText").val()==null){
+				alert("댓글을 작성해주세요.");
+				return false;
+			}
 			replyJson();
 		});
 		

@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="/js/sha1.min.js"></script>
+
 <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/util.comn.js" charset="utf-8"></script>
@@ -119,7 +121,7 @@ function chkIdCallback(status, data){
 <body style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)">
 <jsp:include page="../main/menu.jsp" ></jsp:include>
 <h2 style="margin-left:190px">회원 등록</h2>
-<form name="form1" method="post" action="${path}/member/insert.do">
+<form name="form1" method="post" >
 <table class="table" style="margin-left:20px;width:500px">
 	<tr>
 		<td>아이디</td>
@@ -139,7 +141,7 @@ function chkIdCallback(status, data){
 	</tr>
 	<tr>
 		<td colspan="2" align="center">
-			<input type="submit" class="btn btn-success" id="btnUpdate" value="확인">
+			<input type="button" class="btn btn-success" id="btnUpdate" value="확인">
 			<input type="reset" class="btn btn-success" value="취소">
 			<input type="button" class="btn btn-success" id="toList" value="목록" >
 		</td>

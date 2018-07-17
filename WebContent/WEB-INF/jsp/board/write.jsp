@@ -34,6 +34,10 @@ $(document).ready(function(){
 			location.href="/main.do";
 			return false;
 		}
+		if($("#file").val() == null ||$("#file").val() == "" ){
+			alert("파일 입력은 필수입니다.");
+			return false;
+		}
 		document.form1.submit();
 	});
 	$("#toList").click(function(){
@@ -73,7 +77,7 @@ $(document).ready(function() {
 		<tr>
 			<td>파일 업로드</td>
 			<td>
-				<input type="file" class="file" name="file" placeholder="파일 선택">
+				<input type="file" class="file" id="file" name="file" placeholder="파일 선택">
 			</td>
 		</tr>
 		<tr>

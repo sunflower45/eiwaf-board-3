@@ -42,7 +42,7 @@ function showReplyModify(replyRno){
 				<br>
 				${row.replyText}
 				
-				<c:if test="${sessionScope.memberId==row.replyer}">
+				<c:if test="${sessionScope.memberName==row.replyer}">
 					<div style="float:right;vertical-align:middle;">
 						<input type="button" id="btnModify" class="btn btn-default" value="수정" onclick="showReplyModify('${row.replyRno}')">
 					</div>

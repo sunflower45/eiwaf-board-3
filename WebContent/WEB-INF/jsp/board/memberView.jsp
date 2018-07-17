@@ -6,8 +6,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/js/sha1.min.js"></script>
 
+<script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/util.comn.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/sample.comn.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/sample.menu.js" charset="utf-8"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -21,22 +27,8 @@ $(document).ready(function(){
 	
 })
 $(document).ready(function(){
-	
-	
-	$("#btnDelete").click(function(){
-		if(confirm("삭제하시겠습니까?")){
-			location.href="${path}/member/delete.do?memberId=${dto.memberId}";
-			
-		}
-	})
-	
-	$("#toList").click(function(){
-		location.href="${path}/member/admin.do";
-	})
-	
-})
-$(document).ready(function(){
 	$("#btnUpdate").click(function(){
+		console.log("btnUpdate");
 		if($("#memberPw").val() == ""){
 			alert("비밀번호 입력은 필수 사항입니다.");
 			return false;
@@ -54,10 +46,29 @@ $(document).ready(function(){
 			alert("잘못된 이메일 형식입니다.");
 			return false;
 		}
-		document.form1.action="${path}/member/update.do";
+		document.getElementById("memberPw").value = b64_sha1($("#memberPw").val());
+
+		document.form1.action="/member/update.do";
 		document.form1.submit();
 	})
+});
+
+$(document).ready(function(){
+	
+	
+	$("#btnDelete").click(function(){
+		if(confirm("삭제하시겠습니까?")){
+			location.href="${path}/member/delete.do?memberId=${dto.memberId}";
+			
+		}
+	})
+	
+	$("#toList").click(function(){
+		location.href="${path}/member/admin.do";
+	})
+	
 })
+
 $(document).ready(function() {
     $('#memberPw').on('keyup', function() {
         if($(this).val().length > 50) {
@@ -85,18 +96,18 @@ $(document).ready(function() {
 <body style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)">
 <jsp:include page="../main/menu.jsp" ></jsp:include>
 <h2 style="margin-left:150px">회원 정보 수정</h2>
-<form name="from1" method="post">
+<form name="form1" method="post">
 	<table class="table" style="width:500px">
 		<tr>
 			<td>아이디</td>
 			<td>
-				<input type="hidden" id="memberId" value="${dto.memberId}">
+				<input type="hidden" id="memberId" name="memberId" value="${dto.memberId}">
 				<c:out value="${dto.memberId}"></c:out>
 			</td>
 		</tr>
 		<tr>
 			<td>비밀번호</td>
-			<td><input type="password" class='form-control' name="memberPw"></td>
+			<td><input type="password" class='form-control' id="memberPw" name="memberPw"></td>
 		</tr>
 		<tr>
 			<td>이름</td>

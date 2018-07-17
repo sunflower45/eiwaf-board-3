@@ -50,6 +50,7 @@ public class MemberService extends TestService{
 		
 		SqlSession = null;
 		try {
+			System.out.println("vo : "+vo);
 			SqlSession = openSession(true);
 			SqlSession.update("member.updateMember", vo);
 			SqlSession.commit();
