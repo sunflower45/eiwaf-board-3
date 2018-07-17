@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/jsp/board/join.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/board/replyList.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/board/view.jsp=UTF-8
 encoding//WebContent/WEB-INF/jsp/main/main.jsp=UTF-8
 encoding//src/net/e4net/s1/main/vo/LoginDVO.java=UTF-8

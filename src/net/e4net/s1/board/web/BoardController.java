@@ -100,6 +100,7 @@ public class BoardController extends PublicController {
     	ModelAndView mav = new ModelAndView();
     	mav.setViewName("board/view");
     	mav.addObject("dto", dto);
+		mav.addObject("page_no", rvo.getPage_no());
 
     	Status status = WebUtil.getAttributeStatus(request);
     	if(status.isOk()) {

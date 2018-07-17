@@ -152,7 +152,7 @@
 		</tr>
 		<tr>
 			<td style="width:200px">첨부파일</td>
-			<td><a href="#this" name="file">${dto.boardFileName}</a></td>
+			<td><a href="#this" id="file" name="file">${dto.boardFileName}</a></td>
 		</tr>
 		<tr>
 			<td style="width:200px">이름</td>
