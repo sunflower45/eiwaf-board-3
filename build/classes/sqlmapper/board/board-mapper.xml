@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardService">
+	<select id="listAll" parameterType="hashmap" resultType="net.e4net.s1.board.vo.BoardVO">
+	<include refid="pagingHeader"></include>
+		SELECT distinct board_bno as boardBno,
+			   board_title as boardTitle,
+			   board_content as boardContent,
+			   board_writer as boardWriter,
+			   board_regdate as boardRegdate,
+			   board_viewcnt as boardViewcnt,
+			   (SELECT COUNT(*) FROM tbl_reply WHERE board_bno = reply_bno) AS boardReplyCnt
+		FROM tbl_board b, tbl_member m
+    	<!-- WHERE절을 include 태그로 삽입 -->
+    	<include refid="search"></include>
+    	ORDER BY board_bno desc, board_regdate desc
+    	<include refid="pagingFooter"></include>
+	</select>
+	<select id="countArticle" parameterType="hashmap" resultType="int">
+    	SELECT COUNT(*) FROM tbl_board
+    	<!-- WHERE절을 include 태그로 삽입 -->
+   	 	<include refid="search"></include>
+	</select>
+	<insert id="insert">
+		INSERT INTO tbl_board(board_bno, board_title, board_content, board_writer, board_file_name, board_file_size)
+		VALUES(BOARD_NUM.NEXTVAL, #{boardTitle},#{boardContent}, #{boardWriter}, #{boardFileName}, #{boardFileSize})
+	</insert>
+	<select id="view" resultType="net.e4net.s1.board.vo.BoardVO">
+		SELECT BOARD_BNO as boardBno
+				, BOARD_TITLE as boardTitle
+				, BOARD_CONTENT as boardContent
+				, BOARD_WRITER as boardWriter
+				, BOARD_REGDATE as boardRegdate
+				, BOARD_VIEWCNT  as boardViewcnt
+				, BOARD_FILE_NAME as boardFileName
+		FROM tbl_board
+		WHERE board_bno = #{boardBno}
+	</select>
+	<update id="increaseViewcnt">
+		UPDATE tbl_board SET board_viewcnt = board_viewcnt + 1
+		WHERE board_bno = #{boardBno}
+	</update>
+	
+	<update id="updateArticle">
+		UPDATE tbl_board SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer=#{boardWriter}
+		WHERE board_bno = #{boardBno}
+	</update>
+	<delete id="deleteArticle">
+		DELETE FROM tbl_board
+		WHERE board_bno = #{boardBno}
+	</delete>
+
+
+
+	<sql id="search">
+    <choose>
+        <!-- 검색옵션이 전체 검색일 경우 -->
+        <when test="searchOption == 'all'">
+            WHERE board_content like '%'||#{keyword}||'%'
+            OR board_title like '%'||#{keyword}||'%'
+            OR board_writer like '%'||#{keyword}||'%'
+        </when>
+        <!-- 전체 검색이 아닐 경우 -->
+        <otherwise>
+            WHERE ${searchOption} like '%'||#{keyword}||'%'
+        </otherwise>
+    </choose>
+</sql>
+ <sql id="pagingHeader">
+    SELECT  * FROM (
+        SELECT ROWNUM AS rn, A.* FROM (
+</sql>
+<sql id="pagingFooter">
+        ) A
+    ) WHERE rn BETWEEN #{start} AND #{end}
+</sql>
+
+
+</mapper>

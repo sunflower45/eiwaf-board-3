@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="test">
+
+	<select id="selectUserList" parameterType="net.e4net.s1.test.vo.UserPVO" resultType="net.e4net.s1.test.vo.UserDVO">
+	    SELECT  USER_ID
+	            , NAME
+	            , GRP_CL
+	            , USER_STATUS
+	            , LOGIN_DT
+	            , 1 AS PAGE_NO
+	            , 1 TOTAL_ROWS
+	    FROM    EIWAF_LOGIN
+	    WHERE   1 = 1
+	    <if test="name != ''" >
+	    AND     NAME LIKE '%' || #{name} || '%'
+	    </if>
+	<!--
+		SELECT  P.*
+		FROM    ( SELECT  T.*,
+		                  CEIL(ROWNUM/#{page_rows}) AS PAGE_NO,
+		                  COUNT(1) OVER()           AS TOTAL_ROWS
+		          FROM  ( SELECT  USER_ID
+		                          , NAME
+		                          , GRP_CL
+		                          , USER_STATUS
+		                          , LOGIN_DT
+		                  FROM    EIWAF_LOGIN
+		                  WHERE   1 = 1
+		                  <if test="name != ''" >
+		                  AND     NAME LIKE '%' || #{name} || '%'
+		                  </if>
+
+		            ) T
+		    ) P
+		WHERE  P.PAGE_NO = #{page_no}
+	-->
+	</select>
+
+	<select id="selectUserDetail" parameterType="net.e4net.s1.test.vo.UserPVO" resultType="net.e4net.s1.test.vo.UserDVO">
+		SELECT  USER_ID
+		        NAME
+		        GRP_CL
+		        USER_STATUS
+		        LOGIN_DT
+		FROM    EIWAF_LOGIN
+		WHERE   USER_ID = #{user_id}
+	</select>
+
+</mapper>

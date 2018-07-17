@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.e4net.eiwaf.service.resource.mapper.CodeMapper">
+
+	<resultMap id="codeVO" type="net.e4net.eiwaf.service.resource.vo.CodeVO">
+		<result property="key_field"	column="KEY_FIELD" 		javaType="string" 	jdbcType="VARCHAR" />
+		<result property="parent_field"	column="PARENT_FIELD" 	javaType="string" 	jdbcType="VARCHAR" />
+		<result property="value_field"	column="VALUE_FIELD" 	javaType="string"	jdbcType="VARCHAR" />
+		<result property="alias_field" 	column="ALIAS_FIELD" 	javaType="string" 	jdbcType="VARCHAR" />	
+		<result property="detail_field" column="DETAIL_FIELD" 	javaType="string" 	jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectAllCode" resultMap="codeVO">	
+		SELECT  GCODE_ID     AS KEY_FIELD
+		        , NULL       AS PARENT_FIELD
+		        , GCODE_NAME AS VALUE_FIELD
+		        , GCODE_NAME AS ALIAS_FIELD
+		        , GCODE_NAME AS DETAIL_FIELD
+		FROM    EIWAF_CODE_GRP
+		UNION ALL
+		SELECT  CODE_ID
+		        , GCODE_ID
+		        , CODE_VALUE
+		        , CODE_ALIAS
+		        , CODE_DETAIL
+		FROM    EIWAF_CODE_DTL
+	</select>
+
+	<select id="selectCode" parameterType="net.e4net.eiwaf.service.resource.I18nKey" resultMap="codeVO">	
+		SELECT  GCODE_ID     AS KEY_FIELD
+		        , NULL       AS PARENT_FIELD
+		        , GCODE_NAME AS VALUE_FIELD
+		        , GCODE_NAME AS ALIAS_FIELD
+		        , GCODE_NAME AS DETAIL_FIELD
+		FROM    EIWAF_CODE_GRP
+		WHERE   GCODE_ID = #{key, javaType=string, jdbcType=VARCHAR}
+		UNION ALL
+		SELECT  CODE_ID
+		        , GCODE_IDj
+		        , CODE_VALUE
+		        , CODE_ALIAS
+		        , CODE_DETAIL
+		FROM    EIWAF_CODE_DTL
+		WHERE   GCODE_ID = #{key, javaType=string, jdbcType=VARCHAR}
+	</select>
+
+</mapper>

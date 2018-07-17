@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="codeService" class="net.e4net.eiwaf.service.resource.impl.CodeServiceImpl">
+		<!--
+		<property name="codeSeperator" value="."/>
+		<property name="loadAllDatabaseMessage" value="${res.loadAllDatabase}"/>
+		<property name="location" value="/WEB-INF/config/resource/code/code_sample.xml"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		<property name="xmlParserName" value="org.apache.xerces.parsers.SAXParser"/>
+		-->
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/config/resource/code/code_sample.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="configService" class="net.e4net.eiwaf.service.resource.impl.ConfigServiceImpl">
+		<!--
+		<property name="serverTypes">
+			<props>
+				<prop key="DV">${res.serverTypes.DV}</prop>
+				<prop key="QA">${res.serverTypes.QA}</prop>
+				<prop key="RL">${res.serverTypes.RL}</prop>
+				<prop key="DR">${res.serverTypes.DR}</prop>
+			</props>
+		</property>
+		-->
+		<property name="propertiesService" ref="propertiesService"/>
+		<property name="serverType" value="${res.serverType}"/>
+	</bean>
+
+	<bean id="messageSource" class="net.e4net.eiwaf.service.resource.impl.MessageServiceSource">
+		<!--
+		<property name="basename" value="/WEB-INF/config/resource/message/message"/>
+		<property name="defaultLocale" value="ko_KR"/>
+		<property name="fallbackToDefaultLocale" value="true"/>
+		<property name="fileEncoding" value="UTF-8"/>
+		<property name="fileEncodings"/>
+		<property name="loadAllDatabaseMessage" value="${res.loadAllDatabase}"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		-->
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/config/resource/message/status</value>
+				<value>/WEB-INF/config/resource/message/message</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="messageService" class="net.e4net.eiwaf.service.resource.impl.MessageServiceImpl">
+		<property name="messageServiceSource" ref="messageSource"/>
+	</bean>
+
+	<bean id="propertiesService" class="net.e4net.eiwaf.service.resource.impl.PropertiesServiceImpl">
+		<!--
+		<property name="fileEncoding" value="UTF-8"/>
+		<property name="loadAllDatabaseMessage" value="${res.loadAllDatabase}"/>
+		<property name="location" value="WEB-INF/config/resource/properties/sample.properties"/>
+		<property name="properties"/>
+		<property name="propertiesArray"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		-->
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/config/resource/properties/sample1.properties</value>
+			</list>
+		</property> 
+	</bean>
+
+	<bean id="requestDataService" class="net.e4net.eiwaf.service.resource.impl.RequestDataServiceImpl">
+		<!--
+		<property name="loadAllDatabaseMessage" value="${res.loadAllDatabase}"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+		-->
+	</bean>
+
+	<bean id="resourceEventListener" class="net.e4net.eiwaf.service.resource.ResourceEventListener"/>
+
+</beans>

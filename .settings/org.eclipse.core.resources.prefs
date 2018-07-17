@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/jsp/board/join.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/board/view.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/main/main.jsp=UTF-8
+encoding//src/net/e4net/s1/main/vo/LoginDVO.java=UTF-8
+encoding//src/net/e4net/s1/main/vo/LoginPVO.java=UTF-8
+encoding//src/net/e4net/s1/test/vo/CodePVO.java=UTF-8
+encoding//src/net/e4net/s1/test/vo/UserDVO.java=UTF-8
+encoding//src/net/e4net/s1/test/vo/UserPVO.java=UTF-8

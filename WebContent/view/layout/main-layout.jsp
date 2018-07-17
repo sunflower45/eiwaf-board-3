@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/view/layout/taglib-include.jsp"%>
+
+<ei:requestContext id="requestContext" newRequestData="true" newStatus="true"/>
+<ei:layoutDefinition>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>${eiLayoutTitle}</title>
+<link type="text/css" href="/css/basic.css" rel="stylesheet"/>
+<link type="text/css" href="/css/layout.css" rel="stylesheet"/>
+<script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/eiwaf/eiwaf-1.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/test.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+	$(function() {
+		eiwaf_InitDocumentReady(${requestContext.status});
+	});
+//]]>
+</script>
+</head>
+<body>
+${eiLayoutContent}
+</body>
+</html>
+
+</ei:layoutDefinition>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [Layout]
+ %m : 로그내용이 출력
+ %p : debug, info, warn, error, fatal 등의 priority 출력
+ %r : 어플리케이션이 시작되어 로깅이벤트가 발생하는 시점까지의 경과시간을 밀리세컨드로 출력
+ %c : 예) 카테고리가 a.b.c 처럼 되어있다면 %c{2}는 b.c가 출력됩니다.
+ %n :  플랫폼 종속적인 개행문자가 출력된다. \r\n 또는 \n 일것이다
+ %d : 로깅이벤트가 일어나 날짜 출력 ( 프로그램의 실행속도를 느리게 한다.)
+     예) %d{HH:mm:ss} 또는 %d{dd MMMM yyyy HH:mm:ss}
+ %C : 호출자의 클래스명 출력
+    예) 클래스구조가 org.apache.xyz.SomeClass 처럼 되어있다면 %C{2}는 xyz.SomeClass 가 출력됩니다
+ %M : 로깅이 발생한 method 이름을 나타냅니다.
+ %F : 로깅이 발생한 프로그램 파일명을 나타냅니다.
+ %l : 로깅이 발생한 caller의 정보를 나타냅니다 
+ %L : 로깅이 발생한 caller의 라인수를 나타냅니다 
+ %x : 로깅이 발생한 thread와 관련된 NDC(nested diagnostic context)를 출력합니다. 
+ %X : 로깅이 발생한 thread와 관련된 MDC(mapped diagnostic context)를 출력합니다. 
+ %% : % 표시를 출력하기 위해 사용한다.  
+ %t : 로그이벤트가 발생된 쓰레드의 이름을 출력합니다
+-->
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration
+	xmlns:log4j="http://jakarta.apache.org/log4j/" 
+	debug="false">
+
+	<appender name="webLog" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d][%p]- %m%n"/>
+		</layout>
+	</appender>
+
+	<!--
+	<appender name="webLog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="datePattern" value="'.'yyyy-MM-dd"/>
+		<param name="file" value="/log/weblog/WAS/eiwafTest/nohup/weblog.log"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d][%p]- %m%n"/>
+		</layout>
+	</appender>
+	-->
+
+	<logger name="org.apache.catalina">
+		<level value="WARN"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+
+	<logger name="org.apache.jasper">
+		<level value="WARN"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+
+	<logger name="org.springframework">
+		<level value="WARN"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+
+	<logger name="org.aspectj">
+		<level value="WARN"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+
+	<!-- net.sf.log4jdbc.DriverSpy 지원 -->
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+
+	<logger name="java.sql" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+	
+	<logger name="java.sql.Connection"  additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="java.sql.PreparedStatement" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="java.sql.Statement" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="java.sql.ResultSet" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="console" />
+	</logger>
+
+	<!--
+	net.sf.log4jdbc.DriverSpy 미지원
+	<logger name="java.sql" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+	-->
+
+	<logger name="net.e4net.eiwaf" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+
+	<logger name="net.e4net.s1" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="webLog"/>
+	</logger>
+
+	<root>
+		<level value="OFF"/>
+		<appender-ref ref="webLog"/>
+	</root>
+
+</log4j:configuration>

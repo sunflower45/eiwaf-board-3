@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	<select id="loginCheck" resultType="String">
+		SELECT member_name as memberName FROM tbl_member
+		WHERE member_id = #{memberId} AND member_pw = #{memberPw}
+	</select>
+	<select id="viewMember" resultType="net.e4net.s1.board.vo.MemberVO">
+		SELECT member_name as memberName,
+				member_id as memberId,
+				member_email as memberEmail,
+				member_regdate as memberRegdate
+		FROM tbl_member
+		WHERE member_id = #{memberId} AND member_pw = #{memberPw}
+	</select>
+	<insert id="joinMember">
+		INSERT INTO tbl_member(member_name, member_id, member_pw, member_email)
+		VALUES(#{memberName}, #{memberId}, #{memberPw}, #{memberEmail})
+	</insert>
+	<select id="findId" resultType="String" >
+		SELECT  member_id as memberId
+		FROM tbl_member
+		WHERE member_name = #{memberName, jdbcType=VARCHAR} AND member_email = #{memberEmail, jdbcType=VARCHAR}
+	</select>
+	<select id="findPw" resultType="String" >
+		SELECT  member_pw as memberPw
+		FROM tbl_member
+		WHERE member_name = #{memberName} AND member_id = #{memberId}
+	</select>
+	<select id="idCheck" resultType="String">
+		SELECT count(*)
+		FROM tbl_member
+		WHERE member_id = #{memberId}
+	</select>
+	<select id="memberList" resultType="net.e4net.s1.board.vo.MemberVO">
+		SELECT member_name as memberName,
+				member_id as memberId,
+				member_email as memberEmail,
+				member_regdate as memberRegdate
+		FROM tbl_member
+		ORDER BY member_name 
+	</select>
+	<insert id="insertMember">
+		INSERT INTO tbl_member
+		(member_id, member_pw, member_name, member_email)
+		VALUES
+		(#{memberId}, #{memberPw}, #{memberName}, #{memberEmail})
+	</insert>
+	
+	<select id="readMember" resultType="net.e4net.s1.board.vo.MemberVO">
+	SELECT member_name as memberName,
+				member_id as memberId,
+				member_email as memberEmail,
+				member_regdate as memberRegdate
+		FROM tbl_member
+		WHERE member_id = #{memberId}
+	</select>
+	<update id="updateMember">
+		UPDATE tbl_member
+		SET member_pw = #{memberPw},
+			member_name = #{memberName},
+			member_email = #{memberEmail}
+		WHERE
+			member_id = #{memberId}
+	</update>
+	<update id="updatePw">
+		UPDATE tbl_member
+		SET member_pw = #{memberPw}
+		WHERE member_id = #{memberId}
+	</update>
+	<delete id="deleteMember">
+		DELETE FROM tbl_member
+		WHERE member_id = #{memberId}
+	</delete>
+</mapper>

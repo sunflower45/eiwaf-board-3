@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resourceCode>
+
+	<code key="TEL">
+		<value alias="TEL" value="지역번호">지역번호</value>
+		<code key="02"><value alias="02"  value="서울">02 서울</value></code>
+		<code key="031"><value alias="031" value="경기">031 경기</value></code>
+		<code key="032"><value alias="032" value="인천">032 인천</value></code>
+		<code key="033"><value alias="033" value="강원">033 강원</value></code>
+		<code key="041"><value alias="041" value="충남">041 충남</value></code>
+	</code>
+
+	<code key="CELL">
+		<value alias="CELL" value="핸드폰">핸드폰</value>
+		<code key="010"><value alias="010" value="010">010 [010]</value></code>
+		<code key="011"><value alias="011" value="011">011 SK</value></code>
+		<code key="016"><value alias="016" value="010">016 KT</value></code>
+		<code key="017"><value alias="017" value="017">017 SK</value></code>
+		<code key="018"><value alias="018" value="018">018 KT</value></code>
+		<code key="019"><value alias="019" value="019">019 LGT</value></code>
+	</code>
+
+	<code key="USERSTATUS">
+		<value alias="USERSTATUS" value="사용자상태">사용자상태</value>
+		<code key="00"><value alias="비회원"  value="비회원">비회원</value></code>
+		<code key="10"><value alias="정상회원" value="정상회원">정상회원</value></code>
+		<code key="31"><value alias="패스워드5회오류" value="패스워드5회오류">패스워드5회오류</value></code>
+		<code key="90"><value alias="사용정지회원" value="사용정지회원">사용정지회원</value></code>
+	</code>
+
+	<!--
+	<code key="TEL">
+		<value alias="TEL" value="전화번호">전화번호</value>
+		<code key="DDD">
+			<value alias="DDD" value="지역번호">지역번호</value>
+			<code key="02"><value alias="02"  value="서울">02 서울</value></code>
+			<code key="031"><value alias="031" value="경기">031 경기</value></code>
+			<code key="032"><value alias="032" value="인천">032 인천</value></code>
+			<code key="033"><value alias="033" value="강원">033 강원</value></code>
+			<code key="041"><value alias="041" value="충남">041 충남</value></code>
+			<code key="042"><value alias="042" value="대전">042 대전</value></code>
+			<code key="043"><value alias="043" value="충북">043 충북</value></code>
+			<code key="051"><value alias="051" value="부산">051 부산</value></code>
+			<code key="052"><value alias="052" value="울산">052 울산</value></code>
+			<code key="053"><value alias="053" value="대구">053 대구</value></code>
+			<code key="054"><value alias="054" value="경북">054 경북</value></code>
+			<code key="055"><value alias="055" value="경남">055 경남</value></code>
+			<code key="061"><value alias="061" value="전남">061 전남</value></code>
+			<code key="062"><value alias="062" value="광주">062 광주</value></code>
+			<code key="063"><value alias="063" value="전북">063 전북</value></code>
+			<code key="064"><value alias="064" value="제주">064 제주</value></code>
+		</code>
+	</code>
+	<code key="CELL">
+		<value alias="CELL" value="핸드폰">핸드폰</value>
+		<code key="DDD">
+			<value alias="DDD" value="핸드폰DDD">핸드폰DDD</value>
+			<code key="010"><value alias="010" value="010">010</value></code>
+			<code key="011"><value alias="011" value="011">011</value></code>
+			<code key="016"><value alias="016" value="010">016</value></code>
+			<code key="017"><value alias="017" value="017">017</value></code>
+			<code key="018"><value alias="018" value="018">018</value></code>
+			<code key="019"><value alias="019" value="019">019</value></code>
+		</code>
+		<code key="TELECOM">
+			<value alias="CELL" value="핸드폰">핸드폰</value>
+			<code key="1"><value alias="011" value="SK">SK Telecom</value></code>
+			<code key="2"><value alias="016" value="KT">KT Freetel</value></code>
+			<code key="3"><value alias="019" value="LG">LG Telecom</value></code>
+		</code>
+	</code>
+	-->
+
+</resourceCode>

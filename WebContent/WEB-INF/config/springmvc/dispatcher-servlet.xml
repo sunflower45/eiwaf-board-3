@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<context:component-scan base-package="net.e4net.s1">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<property name="cacheSeconds" value="0"/>
+			<property name="useExpiresHeader" value="true"/>
+			<property name="useCacheControlHeader" value="true"/>
+			<property name="useCacheControlNoStore" value="true"/>
+			<!-- cache
+			<property name="useExpiresHeader" value="false"/>
+			<property name="useCacheControlHeader" value="false"/>
+			<property name="useCacheControlNoStore" value="false"/>
+			-->
+		</bean>
+	</mvc:interceptors>
+
+	<bean id="controllerInterceptor" class="net.e4net.s1.comn.TestControllerInterceptor">
+		<!--
+		<property name="useRequestDataService" value="false"/>
+		-->
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="alwaysUseFullPath" value="true"/>
+		<property name="interceptors">
+			<list>
+				<ref bean="controllerInterceptor"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="customArgumentResolvers">
+			<list>
+				<bean class="net.e4net.eiwaf.web.handler.RequestContextArgumentResolver"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="exceptionResolver" class="net.e4net.s1.comn.TestExceptionResolver">
+		<!--
+		<property name="errorView" value="error"/>
+		<property name="jsonView" value="jsonView"/>
+		-->
+	</bean>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+		<property name="defaultLocale" value="ko_KR"/>
+	</bean>
+
+	<!--
+	<bean class="net.e4net.eiwaf.web.xecureweb.XecureWebViewResolver">
+	-->
+	<bean class="net.e4net.eiwaf.web.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+		<property name="order" value="1"/>
+		<!--
+		<property name="contentType" value="text/html; charset=UTF-8"/>
+		-->
+	</bean>
+
+	<bean id="jsonView" class="net.e4net.eiwaf.web.view.JsonView">
+		<property name="loggerName" value="net.e4net.s1"/>
+		<!--
+		<property name="contentType" value="text/html; charset=UTF-8"/>
+		-->
+	</bean>
+
+	<bean id="nullView" class="net.e4net.eiwaf.web.view.NullView"/>
+
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>
+	</bean>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	        <property name="maxUploadSize" value="100000000" />
+	        <property name="maxInMemorySize" value="100000000" />
+	        
+	</bean>
+	
+	<bean id="uploadPath" class="java.lang.String">
+	    <constructor-arg value="C:\Users\D169\Desktop\EIWAF\file\"/>
+	</bean>	
+
+</beans>
