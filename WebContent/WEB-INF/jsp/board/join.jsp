@@ -103,10 +103,13 @@ $(document).on('click', '#submitBtn', function(){
 		alert("잘못된 이메일 형식입니다.");
 		return false;
 	}
-	if(pw_validate == false || id_validate == false){
-		alert("폼을 제대로 입력해주세요");
+	if(pw_validate == false){
+		alert("비밀번호를 제대로 입력해주세요");
 		return false;
-	} else {
+	} else if(id_validate == false) {
+		alert("아이디를 제대로 입력해주세요");
+		return false;
+	}else {
 		document.getElementById("memberPw").value = b64_sha1($("#memberPw").val());
 		var f = document.form1;
 		var result = svcf_Ajax("/member/joinUpdate.do", f, {

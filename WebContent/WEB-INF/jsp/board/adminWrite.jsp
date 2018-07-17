@@ -6,8 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="/js/sha1.min.js"></script>
 
+<script type="text/javascript" src="/js/sha1.min.js"></script>
 <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/util.comn.js" charset="utf-8"></script>
@@ -82,23 +82,24 @@ $(document).ready(function(){
 			alert("잘못된 이메일 형식입니다.");
 			return false;
 		}
+		document.getElementById("memberPw").value = b64_sha1($("#memberPw").val());
+
 	  	var f = document.form1;
-    	var result = svcf_Ajax("/member/idCheck.do", f, {
+    	var result = svcf_Ajax("/member/insert.do", f, {
     		async : false,
     		procType : "R"
     	});
     	
     	svcf_SyncCallbackFn(result, chkIdCallback);		
     	
-		document.form1.action="${path}/member/admin.do";
-		document.form1.submit();
+		location.href="${path}/member/admin.do";
 	})
 })
 
 function chkIdCallback(status, data){
 	
 	var pattern = /[^(a-zA-Z0-9)]/;
-	
+	console.log("idcallback");
 	if(data.cnt =="1"){
 		alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 		id_validate = false;
@@ -110,7 +111,7 @@ function chkIdCallback(status, data){
 			return false;
 		} else{
 			id_validate = true;
-			alert("사용 가능한 아이디입니다.");
+			alert("가입이 완료되었습니다.");
 			$("#memberPw").focus();
 		}
 	}

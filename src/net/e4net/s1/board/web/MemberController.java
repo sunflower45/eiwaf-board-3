@@ -122,7 +122,7 @@ public class MemberController extends PublicController {
 	@RequestMapping(value="insert.do")
 	public ModelAndView memberInsert(@ModelAttribute MemberVO vo, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/member/admin.do");
+		mav.setViewName("jsonView");
 		memberService.insertMember(vo);
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {

@@ -41,7 +41,11 @@ $(document).on('click','#findId',function(){
 	$("#memberEmail").val("");
 });
 function idFindActionCallback(status, data){
+	if(data.memberId == null || data.memberId == ""){
+		alert('회원님의 가입 이력이 없습니다.')
+	}else {
 	alert("회원님의 정보로 등록된 아이디는  "+data.memberId+" 입니다.");
+	}
 }
 $(document).on('click','#findPw',function(){
 	var pattern = /[^(a-zA-Z0-9)]/;
