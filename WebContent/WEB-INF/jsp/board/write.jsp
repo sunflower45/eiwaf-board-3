@@ -29,6 +29,11 @@ $(document).ready(function(){
 			document.form1.boardContent.focus();
 			return;
 		}
+		if("${sessionScope.memberName}" == ""){
+			alert("제대로 로그인하세요.")
+			location.href="/main.do";
+			return false;
+		}
 		document.form1.submit();
 	});
 	$("#toList").click(function(){

@@ -11,14 +11,24 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+	if("${sessionScope.memberId}" != "admin"){
+		alert("관리자 외에 접근이 불가합니다.");
+		location.href="/main.do";
+		return false;
+	}
+	
+})
+</script>
 <title>회원 관리</title>
 </head>
-<body style="margin-top:10px;margin-left:20px">
+<body style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)">
 <jsp:include page="../main/menu.jsp" ></jsp:include>
 <h2 style="margin-left:300px">회원 목록</h2>
 <input style="margin-left:30px;margin-bottom:10px" type="button" class="btn btn-success" value="회원등록" onclick="location.href='${path}/member/adminWrite.do'">
 
-<table class='table' style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)" >
+<table class='table' style="margin-left:20px;width:800px" >
 	<tr class="success" >
 		<th>아이디</th>
 		<th>이름</th>

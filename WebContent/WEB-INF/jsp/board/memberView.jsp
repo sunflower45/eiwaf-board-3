@@ -13,6 +13,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
+	if("${sessionScope.memberId}" != "admin"){
+		alert("관리자 외에 접근이 불가합니다.");
+		location.href="/main.do";
+		return false;
+	}
+	
+})
+$(document).ready(function(){
 	
 	
 	$("#btnDelete").click(function(){
@@ -88,15 +96,15 @@ $(document).ready(function() {
 		</tr>
 		<tr>
 			<td>비밀번호</td>
-			<td><input type="password" name="memberPw"></td>
+			<td><input type="password" class='form-control' name="memberPw"></td>
 		</tr>
 		<tr>
 			<td>이름</td>
-			<td><input name="memberName" id="memberName" value="${dto.memberName }"></td>
+			<td><input name="memberName" class='form-control' id="memberName" value="${dto.memberName }"></td>
 		</tr>
 		<tr>
 			<td>이메일 주소</td>
-			<td><input name="memberEmail" id="memberEmail" value="${dto.memberEmail}"></td>
+			<td><input name="memberEmail" class='form-control' id="memberEmail" value="${dto.memberEmail}"></td>
 		</tr>
 		<tr>
 			<td>회원가입일자</td>
