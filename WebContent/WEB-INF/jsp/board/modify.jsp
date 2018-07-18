@@ -54,6 +54,20 @@
             document.form1.submit();
         });
 	})
+$(document).ready(function() {
+    $('#boardTitle').on('keyup', function() {
+        if($(this).val().length > 1000) {
+            $(this).val($(this).val().substring(0, 1000));
+        }
+    });
+});
+$(document).ready(function() {
+    $('#boardContent').on('keyup', function() {
+        if($(this).val().length > 2000) {
+            $(this).val($(this).val().substring(0, 2000));
+        }
+    });
+});	
 </script>
 </head>
 <body style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)">

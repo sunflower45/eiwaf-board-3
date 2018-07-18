@@ -49,6 +49,13 @@
 	        frm.submit();  
 	    };
 	}
+	$(document).ready(function() {
+	    $('#replyText').on('keyup', function() {
+	        if($(this).val().length > 4000) {
+	            $(this).val($(this).val().substring(0, 4000));
+	        }
+	    });
+	});
 	$(document).ready(function(){
 		listReply("1");
 		

@@ -43,13 +43,10 @@ public class ReplyController extends PublicController {
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		int count = replyService.count(replyBno);
-		System.out.println("count : "+count);
 		ReplyPager replyPager = new ReplyPager(count,curPage);
 		int start = replyPager.getPageBegin();
 		int end = replyPager.getPageEnd();
-		System.out.println("start : "+start+" end : "+end);
 		List<ReplyVO> list = replyService.list(replyBno, start, end);
-		System.out.println("list :"+list); 
 		mav.setViewName("board/replyList");
 		mav.addObject("list", list);
 		mav.addObject("replyPager", replyPager);

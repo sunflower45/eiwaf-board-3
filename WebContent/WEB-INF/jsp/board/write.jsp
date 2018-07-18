@@ -54,8 +54,8 @@ $(document).ready(function() {
 });
 $(document).ready(function() {
     $('#boardContent').on('keyup', function() {
-        if($(this).val().length > 1000) {
-            $(this).val($(this).val().substring(0, 1000));
+        if($(this).val().length > 2000) {
+            $(this).val($(this).val().substring(0, 2000));
         }
     });
 });

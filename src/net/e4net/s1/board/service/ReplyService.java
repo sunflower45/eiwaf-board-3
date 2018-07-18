@@ -25,7 +25,6 @@ public class ReplyService extends TestService{
 			map.put("end", end);
 			SqlSession = openSession(true);
 			List<ReplyVO> vo = SqlSession.selectList("reply.listReply", map);
-			System.out.println("service vo : "+vo);
 			SqlSession.commit();
 			return vo;
 		} catch (Exception e) {

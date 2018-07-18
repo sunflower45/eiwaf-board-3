@@ -23,7 +23,7 @@ function replyUpdate(){
 }
 function replyUpdateCallback(status, data){
 	$("#modifyReply").css("visibility", "hidden");
-	listReply();
+	listReply("1");
 }
 $("#btnReplyDelete").click(function(){
 	if(confirm("삭제하시겠습니까?")){
@@ -33,7 +33,7 @@ $("#btnReplyDelete").click(function(){
 			success : function(result){
 				alert("삭제되었습니다.");
 				$("#modifyReply").css("visibility", "hidden");
-				listReply();
+				listReply("1");
 			},
 	        error: function (request,status,error){
 	        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -43,6 +43,13 @@ $("#btnReplyDelete").click(function(){
 });
 $("#btnReplyClose").click(function(){
 	$("#modifyReply").css("visibility", "hidden");
+});
+$(document).ready(function() {
+    $('#replyText').on('keyup', function() {
+        if($(this).val().length > 4000) {
+            $(this).val($(this).val().substring(0, 4000));
+        }
+    });
 });
 </script>
 </head>
