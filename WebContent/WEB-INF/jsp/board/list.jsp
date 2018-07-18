@@ -70,6 +70,13 @@
 			<th>작성일</th>
 			<th>조회수</th>
 		</tr>
+		<c:choose>
+		<c:when test="${map.count == 0}">
+			<tr>
+				<td align="center">게시글이 존재하지 않습니다.</td>
+			</tr>
+		</c:when>
+		<c:otherwise>
 		<c:forEach var="row" items="${map.list}">
 			<tr>
 				<td><c:out value="${row.boardBno}"></c:out></td>
@@ -84,6 +91,8 @@
 				<td><c:out value="${row.boardViewcnt}"></c:out></td>
 			</tr>
 		</c:forEach>
+		</c:otherwise>
+		</c:choose>
 		<tr>
             <td colspan="5">
                 <!-- **처음페이지로 이동 : 현재 페이지가 1보다 크면  [처음]하이퍼링크를 화면에 출력-->

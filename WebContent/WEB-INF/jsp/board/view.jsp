@@ -103,6 +103,7 @@
 	}
 	function replyJsonCallback(status, data){
 		alert('댓글이 등록되었습니다.');
+		document.getElementById("replyText").value = "";
 		listReply("1");
 	}
 	
