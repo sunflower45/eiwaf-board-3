@@ -17,7 +17,7 @@ import net.e4net.eiwaf.common.Status;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.ReplyService;
 import net.e4net.s1.board.vo.BoardVO;
-import net.e4net.s1.board.vo.MemberVO;
+import net.e4net.s1.board.vo.ReplyPager;
 import net.e4net.s1.board.vo.ReplyVO;
 import net.e4net.s1.comn.PublicController;
 
@@ -38,11 +38,21 @@ public class ReplyController extends PublicController {
 	}
 	
 	@RequestMapping(value="list.do", method=RequestMethod.GET)
-	public ModelAndView list(@RequestParam int replyBno, HttpServletRequest request) {
+	public ModelAndView list(@RequestParam int replyBno, 
+			@RequestParam(defaultValue="1")int curPage,
+			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		List<ReplyVO> list = replyService.list(replyBno);
+		int count = replyService.count(replyBno);
+		System.out.println("count : "+count);
+		ReplyPager replyPager = new ReplyPager(count,curPage);
+		int start = replyPager.getPageBegin();
+		int end = replyPager.getPageEnd();
+		System.out.println("start : "+start+" end : "+end);
+		List<ReplyVO> list = replyService.list(replyBno, start, end);
+		System.out.println("list :"+list); 
 		mav.setViewName("board/replyList");
 		mav.addObject("list", list);
+		mav.addObject("replyPager", replyPager);
     	Status status = WebUtil.getAttributeStatus(request);
 		if(status.isOk()) {
     		return getOkModelAndView(mav, status);
@@ -51,12 +61,7 @@ public class ReplyController extends PublicController {
     	}
 	}
 	
-	@RequestMapping("listJson.do")
-	@ResponseBody
-	public List<ReplyVO> listJson(@RequestParam int replyBno, HttpServletRequest request) {
-		List<ReplyVO> list = replyService.list(replyBno);
-		return list;
-	}
+
 	
 	@RequestMapping(value="detail.do", method=RequestMethod.GET)
 	public ModelAndView replyDetail(@RequestParam  int replyRno, HttpServletRequest request) {
@@ -64,6 +69,7 @@ public class ReplyController extends PublicController {
 		ReplyVO vo = replyService.detail(replyRno);
 		mav.setViewName("board/replyDetail");
 		mav.addObject("vo", vo);
+		
 		Status status = WebUtil.getAttributeStatus(request);
 		if(status.isOk()) {
     		return getOkModelAndView(mav, status);

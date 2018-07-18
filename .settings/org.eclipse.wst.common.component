@@ -2,7 +2,7 @@
     <wb-module deploy-name="eiwaf-sample3">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="eiwaf-sample3"/>
         <property name="java-output-path" value="/eiwaf-sample3/build/classes"/>
+        <property name="context-root" value="eiwaf-sample3"/>
     </wb-module>
 </project-modules>

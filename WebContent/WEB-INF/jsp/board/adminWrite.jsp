@@ -61,19 +61,19 @@ $(document).ready(function(){
 })
 $(document).ready(function(){
 	$("#btnUpdate").click(function(){
-		if($("#memberId").val() == ""){
+		if($("#memberId").val() == ""|| $("#memberId").val() == null){
 			alert("비밀번호 입력은 필수 사항입니다.");
 			return false;
 		}
-		if($("#memberPw").val() == ""){
+		if($("#memberPw").val() == ""|| $("#memberPw").val() == null){
 			alert("비밀번호 입력은 필수 사항입니다.");
 			return false;
 		}
-		if($("#memberName").val() == ""){
+		if($("#memberName").val() == ""|| $("#memberName").val() == null){
 			alert("이름 입력은 필수 사항입니다.");
 			return false;
 		}
-		if($("#memberEmail").val() == ""){
+		if($("#memberEmail").val() == ""|| $("#memberEmail").val() == null){
 			alert("이메일 주소 입력은 필수 사항입니다.");
 			return false;
 		}
@@ -109,6 +109,8 @@ function chkIdCallback(status, data){
 			alert("아이디는 영문만 허용합니다.");
 			id_validate = false;
 			return false;
+		} else if (data.memberId==""||data.memberId==null){
+			alert("아이디는 공백이 허용되지 않습니다.");
 		} else{
 			id_validate = true;
 			alert("가입이 완료되었습니다.");

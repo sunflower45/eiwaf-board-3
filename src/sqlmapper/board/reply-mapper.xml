@@ -7,6 +7,7 @@
 		VALUES (seq_reply.NEXTVAL, #{replyBno}, #{replyText}, #{replyer})	
 	</insert>
 	<select id="listReply" resultType="net.e4net.s1.board.vo.ReplyVO">
+	<include refid="pagingHeader"/>
 		SELECT reply_rno AS replyRno,
 				reply_bno AS replyBno,
 				replyer AS replyer,
@@ -15,6 +16,7 @@
 		FROM tbl_reply
 		WHERE reply_bno = #{replyBno}
 		ORDER BY reply_rno
+		<include refid="pagingFooter"/>
 	</select>
 	
 	<select id="updateReply">
@@ -36,4 +38,16 @@
 		FROM tbl_reply
 		WHERE reply_rno = #{replyRno}
 	</select>
+	<select id="countReply" resultType="int">
+	SELECT COUNT(*) FROM tbl_reply WHERE reply_bno = #{replyBno}
+	</select>
+	
+	    <sql id="pagingHeader">
+        SELECT * FROM (
+            SELECT ROWNUM AS rn, A.* FROM (
+    </sql>
+    <sql id="pagingFooter">
+            ) A
+        ) WHERE rn BETWEEN #{start} AND #{end}
+    </sql>
 </mapper>

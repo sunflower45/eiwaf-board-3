@@ -29,15 +29,15 @@ $(document).ready(function(){
 $(document).ready(function(){
 	$("#btnUpdate").click(function(){
 		console.log("btnUpdate");
-		if($("#memberPw").val() == ""){
+		if($("#memberPw").val() == "" || $("#memberPw").val() == null){
 			alert("비밀번호 입력은 필수 사항입니다.");
 			return false;
 		}
-		if($("#memberName").val() == ""){
+		if($("#memberName").val() == "" || $("#memberName").val() == null){
 			alert("이름 입력은 필수 사항입니다.");
 			return false;
 		}
-		if($("#memberEmail").val() == ""){
+		if($("#memberEmail").val() == "" || $("#memberEmail").val() == null){
 			alert("이메일 주소 입력은 필수 사항입니다.");
 			return false;
 		}

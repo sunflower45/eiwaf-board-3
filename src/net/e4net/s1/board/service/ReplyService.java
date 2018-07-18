@@ -1,6 +1,8 @@
 package net.e4net.s1.board.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,16 @@ public class ReplyService extends TestService{
 	SqlSession SqlSession;
 	
 	@SuppressWarnings("unchecked")
-	public List<ReplyVO> list(int replyBno){
+	public List<ReplyVO> list(int replyBno, int start, int end){
 		SqlSession = null;
 		try {
+			Map<String, Object> map = new HashMap<String,Object>();
+			map.put("replyBno", replyBno);
+			map.put("start", start);
+			map.put("end", end);
 			SqlSession = openSession(true);
-			List<ReplyVO> vo = SqlSession.selectList("reply.listReply", replyBno);
+			List<ReplyVO> vo = SqlSession.selectList("reply.listReply", map);
+			System.out.println("service vo : "+vo);
 			SqlSession.commit();
 			return vo;
 		} catch (Exception e) {
@@ -85,6 +92,7 @@ public class ReplyService extends TestService{
 		SqlSession = null;
 		try {
 			SqlSession = openSession(true);
+			
 			ReplyVO vo = (ReplyVO) SqlSession.selectOne("reply.detailReply", replyRno);
 			SqlSession.commit();
 
@@ -97,5 +105,22 @@ public class ReplyService extends TestService{
 			if(SqlSession != null) SqlSession.close();
 		}
 		
+	}
+	public int count(int replyBno) {
+		SqlSession = null;
+		try {
+			SqlSession = openSession(true);
+			int cnt = (int) SqlSession.selectOne("reply.countReply", replyBno);		
+			SqlSession.commit();
+			return cnt;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return -1;
+			
+		} finally {
+			if(SqlSession != null) SqlSession.close();
+		}
 	}
 }

@@ -29,7 +29,7 @@ $(document).ready(function(){
 			document.form1.boardContent.focus();
 			return;
 		}
-		if("${sessionScope.memberName}" == ""){
+		if("${sessionScope.memberName}" == "" || "${sessionScope.memberName}" == null){
 			alert("제대로 로그인하세요.")
 			location.href="/main.do";
 			return false;

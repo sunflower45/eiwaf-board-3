@@ -20,7 +20,7 @@
 
 <script type="text/javascript">
 var id_validate = true;
-var pw_validate = true;
+var pw_validate = false;
 var email_validate = true;
 $(document).on('click', '#toLogin', function(){
 	location.href = "${path}/main.do";
@@ -70,7 +70,10 @@ function chkIdCallback(status, data){
 			alert("아이디는 영문만 허용합니다.");
 			id_validate = false;
 			return false;
-		} else{
+		} else if(data.memberId == "" || data.memberId == null){
+			alert('아이디 공백은 허용되지 않습니다.');
+		}
+		else{
 			id_validate = true;
 			alert("사용 가능한 아이디입니다.");
 			$("#memberPw").focus();
@@ -78,29 +81,33 @@ function chkIdCallback(status, data){
 	}
 }
 $(document).on('click', '#submitBtn', function(){
-	if($("#memberId").val() == ''){
+	if($("#memberId").val() == '' || $("#memberId").val() == null){
 		alert('아이디는 필수 입력 사항입니다.');
 		return false;
 	}
-	if($("#memberPw").val() == ''){
+	if($("#memberPw").val() == ''|| $("#memberPw").val() == null){
 		alert('비밀번호는 필수 입력 사항입니다.');
 		return false;
 	}
-	if($("#memberPwCheck").val() == ''){
+	if($("#memberPwCheck").val() == ''|| $("#memberPwCheck").val() == null){
 		alert('비밀번호확인은 필수 입력 사항입니다.');
 		return false;
 	}
-	if($("#memberName").val() == ''){
+	if($("#memberName").val() == ''|| $("#memberName").val() == null){
 		alert('이름은 필수 입력 사항입니다.');
 		return false;
 	}
-	if($("#memberEmail").val() == ''){
+	if($("#memberEmail").val() == ''|| $("#memberEmail").val() == null){
 		alert('이메일은 필수 입력 사항입니다.');
 		return false;
 	}
 	var pattern=/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 	if(pattern.test($("#memberEmail").val()) == false ){
 		alert("잘못된 이메일 형식입니다.");
+		return false;
+	}
+	if(document.getElementById("memberPw").value != document.getElementById("memberPwCheck").value){
+		alert("비밀번호가 일치하지 않습니다.");
 		return false;
 	}
 	if(pw_validate == false){

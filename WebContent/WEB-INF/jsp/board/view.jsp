@@ -50,7 +50,7 @@
 	    };
 	}
 	$(document).ready(function(){
-		listReply();
+		listReply("1");
 		
 		
 		$("#btnReply").click(function(){
@@ -96,15 +96,15 @@
 	}
 	function replyJsonCallback(status, data){
 		alert('댓글이 등록되었습니다.');
-		listReply();
+		listReply("1");
 	}
 	
 	
- 	function listReply(){
+ 	function listReply(num){
  		
 		$.ajax({
 			method : 'get',
-			url : "/reply/list.do?replyBno=${dto.boardBno}",
+			url : "/reply/list.do?replyBno=${dto.boardBno}&curPage="+num,
 			success : function(result) {
 				$("#listReply").html(result);	
 			},

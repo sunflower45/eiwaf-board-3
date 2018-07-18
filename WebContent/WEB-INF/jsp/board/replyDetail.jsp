@@ -49,8 +49,7 @@ $("#btnReplyClose").click(function(){
 <body>
 ´ñ±Û ¹øÈ£ : <c:out value="${vo.replyRno }"></c:out><br>
 <form name="form1">
-<textarea style="width:400px" class="form-control" id="replyText" name="replyText" rows="5" cols="82">
-	<c:out value="${vo.replyText}"></c:out>
+<textarea style="width:400px" class="form-control" id="replyText" name="replyText" rows="5" cols="82"><c:out value="${vo.replyText}"></c:out>
 </textarea>
 <input type="hidden" name="replyRno" id = "replyRno" value="${vo.replyRno}">
 <div>

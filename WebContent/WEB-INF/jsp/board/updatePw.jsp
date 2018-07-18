@@ -64,16 +64,20 @@ function chkIdCallback(status, data){
 }
 $(document).on('click', '#submitBtn', function(){
 	
-	if($("#memberId").val() == ''){
+	if($("#memberId").val() == ''|| $("#memberId").val() == null){
 		alert('아이디는 필수 입력 사항입니다.');
 		return false;
 	}
-	if($("#memberPw").val() == ''){
+	if($("#memberPw").val() == ''|| $("#memberPw").val() == null){
 		alert('비밀번호는 필수 입력 사항입니다.');
 		return false;
 	}
-	if($("#memberPwCheck").val() == ''){
+	if($("#memberPwCheck").val() == ''|| $("#memberPwCheck").val() == null){
 		alert('비밀번호확인은 필수 입력 사항입니다.');
+		return false;
+	}
+	if(document.getElementById("memberPw").value != document.getElementById("memberPwCheck").value){
+		alert("비밀번호가 일치하지 않습니다.");
 		return false;
 	}
 	if(pw_validate == false){
