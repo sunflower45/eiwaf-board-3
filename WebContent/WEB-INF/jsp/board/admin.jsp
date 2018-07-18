@@ -39,10 +39,10 @@ $(document).ready(function(){
 	<c:forEach var="row" items="${list}">
 	<c:if test="${row.memberId != 'admin'}">
 	<tr>
-		<td >${row.memberId}</td>
-		<td>${row.memberName}</td>
-		<td>${row.memberEmail}</td>
-		<td>${row.memberRegdate}</td>
+		<td ><c:out value="${row.memberId}"></c:out></td>
+		<td><c:out value="${row.memberName}"></c:out></td>
+		<td><c:out value="${row.memberEmail}"></c:out></td>
+		<td><c:out value="${row.memberRegdate}"></c:out></td>
 		<td>
 			<form name="form1" id="form1" method="post" action="${path}/member/view.do?memberId=${row.memberId}">
 			<button type="submit" style="width:55px;height:30px" class="btn btn-default" id="btnUpdate">수정</button>

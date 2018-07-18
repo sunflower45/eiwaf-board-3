@@ -14,6 +14,7 @@
 			<a href="${path}/member/admin.do">회원관리</a>
 		</c:if>	
 		<a href="${path}/member/logout.do">로그아웃</a>
+		<a href="${path}/member/memberModify.do?memberId=${sessionScope.memberId}">회원정보 수정</a>
 			
 		<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${sessionScope.memberId }님이 로그인중입니다.
 	</c:when>

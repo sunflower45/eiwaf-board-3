@@ -20,7 +20,6 @@ import net.e4net.eiwaf.common.Status;
 import net.e4net.eiwaf.web.util.WebUtil;
 import net.e4net.s1.board.service.MemberService;
 import net.e4net.s1.board.vo.MemberVO;
-import net.e4net.s1.board.vo.ReplyVO;
 import net.e4net.s1.comn.PublicController;
 
 @Controller
@@ -92,12 +91,39 @@ public class MemberController extends PublicController {
 		
 	}
 	
+	@RequestMapping(value="userUpdate.do")
+	public ModelAndView userUpdate(@ModelAttribute MemberVO vo, HttpServletRequest request) throws Exception {
+		memberService.updateMember(vo);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/board/list.do");
+		Status status = WebUtil.getAttributeStatus(request);
+    	if(status.isOk()) {
+    		return getOkModelAndView(mav, status);
+    	} else {
+    		return getFailModelAndView(mav, status);
+    	}
+	}
+	
 	@RequestMapping("pwUpdate.do")
 	public ModelAndView pwUpdate(HttpServletRequest request) throws Exception{
-		System.out.println("&&&&&&&&&&&");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/board/updatePw");
 
+		Status status = WebUtil.getAttributeStatus(request);
+		if (status.isOk()) {
+			return getOkModelAndView(mav, status);
+		} else {
+			return getFailModelAndView(mav, status);
+		}
+	}
+	
+	@RequestMapping(value="memberModify.do", method=RequestMethod.GET)
+	public ModelAndView memberModify(@RequestParam String memberId , HttpServletRequest request) throws Exception {
+		MemberVO dto = memberService.memberRead(memberId);
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("board/memberModify");
+		mav.addObject("dto", dto);
 		Status status = WebUtil.getAttributeStatus(request);
 		if (status.isOk()) {
 			return getOkModelAndView(mav, status);
@@ -179,8 +205,10 @@ public class MemberController extends PublicController {
 		
 	}
 	
+	
+	
 	@RequestMapping("loginCheck.do")
-	public ModelAndView loginCheck(@ModelAttribute MemberVO vo, HttpSession session, HttpServletRequest request) throws Exception {
+	public ModelAndView loginCheck(@ModelAttribute MemberVO vo ,HttpSession session, HttpServletRequest request) throws Exception {
 		String name = memberService.loginCheck(vo, session);
 		ModelAndView mav = new ModelAndView();
 		session = request.getSession(true);

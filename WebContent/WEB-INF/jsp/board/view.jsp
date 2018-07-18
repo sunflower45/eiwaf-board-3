@@ -96,7 +96,7 @@
 	}
 	function replyJsonCallback(status, data){
 		alert('댓글이 등록되었습니다.');
-		listReply("${page_no}");
+		listReply();
 	}
 	
 	
@@ -166,7 +166,7 @@
 
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">
-		<input type="hidden" name="replyer" value="${sessionScope.memberName}">
+		<input type="hidden" name="replyer" value="${sessionScope.memberId}">
 		<c:if test="${sessionScope.memberName == dto.boardWriter}">
 			<button type="button"  style="margin-left:300px" id="btnUpdate" class="btn btn-success">수정</button>
 			<button type="button" id = "btnDelete" class="btn btn-success">삭제</button>
