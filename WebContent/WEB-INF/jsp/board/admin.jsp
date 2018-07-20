@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
+// 관리자 외의 세션이 접근하고자 할 떄 막음
 $(document).ready(function(){
 	if("${sessionScope.memberId}" != "admin"){
 		alert("관리자 외에 접근이 불가합니다.");

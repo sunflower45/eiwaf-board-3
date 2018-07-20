@@ -7,11 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
-
 <script type="text/javascript">
+// 댓글 수정
 $("#btnReplyUpdate").click(function(){
 	replyUpdate();
 });
+
+// 댓글 ajax로 수정하기
 function replyUpdate(){
 	
 	var f = document.form1;
@@ -25,6 +27,8 @@ function replyUpdateCallback(status, data){
 	$("#modifyReply").css("visibility", "hidden");
 	listReply("1");
 }
+
+// 뎃글 삭제
 $("#btnReplyDelete").click(function(){
 	if(confirm("삭제하시겠습니까?")){
 		$.ajax({

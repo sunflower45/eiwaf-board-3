@@ -13,6 +13,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script>
+
+// 댓글 수정 버튼 눌렀을 때
 function showReplyModify(replyRno){
 	
 	$.ajax({
@@ -38,9 +40,9 @@ function showReplyModify(replyRno){
 		<c:forEach var="row" items="${list}">
 		<tr>
 			<td>
-				${row.replyer} ${row.replyRegdate}
+				<c:out value="${row.replyer}"></c:out> <c:out value="${row.replyRegdate}"></c:out>
 				<br>
-				${row.replyText}
+				<c:out value="${row.replyText}"></c:out>
 				
 				<c:if test="${sessionScope.memberId==row.replyer}">
 					<div style="float:right;vertical-align:middle;">

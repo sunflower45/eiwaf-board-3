@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
+// 관리자 외에 세션이 접근하려고 할 떄 막음
 $(document).ready(function(){
 	if("${sessionScope.memberId}" != "admin"){
 		alert("관리자 외에 접근이 불가합니다.");
@@ -26,41 +27,49 @@ $(document).ready(function(){
 	}
 	
 })
+
+// ID가 30자 넘을 때 막음
 $(document).ready(function() {
     $('#memberId').on('keyup', function() {
         if($(this).val().length > 30) {
             $(this).val($(this).val().substring(0, 30));
         }
     });
-});
-$(document).ready(function() {
     $('#memberPw').on('keyup', function() {
         if($(this).val().length > 50) {
             $(this).val($(this).val().substring(0, 50));
         }
-    });
-});
-$(document).ready(function() {
+    });  
+ 	// 이름 10자 이상일때 막음
     $('#memberName').on('keyup', function() {
         if($(this).val().length > 10) {
             $(this).val($(this).val().substring(0, 10));
         }
     });
-});
-$(document).ready(function() {
+ 	
+ 	// 이메일 100자 이상일 떄 막음
     $('#memberEmail').on('keyup', function() {
         if($(this).val().length > 100) {
             $(this).val($(this).val().substring(0, 100));
         }
     });
 });
+
+
+
+
+
+// 목록으로 버튼 
 $(document).ready(function(){
 	$("#toList").click(function(){
 		location.href = "/member/admin.do";
 	})
 })
+
+// submit 버튼 클릭시 (update button)
 $(document).ready(function(){
 	$("#btnUpdate").click(function(){
+		// 비밀번호, 이름, 이메일주소 등 필수 입력사항
 		if($("#memberId").val() == ""|| $("#memberId").val() == null){
 			alert("비밀번호 입력은 필수 사항입니다.");
 			return false;
@@ -82,8 +91,11 @@ $(document).ready(function(){
 			alert("잘못된 이메일 형식입니다.");
 			return false;
 		}
+		
+		// 비밀번호 암호화해서 넘어감
 		document.getElementById("memberPw").value = b64_sha1($("#memberPw").val());
 
+		// eiwaf_ajax로 회원등록
 	  	var f = document.form1;
     	var result = svcf_Ajax("/member/insert.do", f, {
     		async : false,
@@ -99,12 +111,13 @@ $(document).ready(function(){
 function chkIdCallback(status, data){
 	
 	var pattern = /[^(a-zA-Z0-9)]/;
-	console.log("idcallback");
+	// 아이디 중복검사
 	if(data.cnt =="1"){
 		alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 		id_validate = false;
 		$("#memberId").focus();
 	} else {
+		// 아이디 한글 검사
 		if(pattern.test(data.memberId)){
 			alert("아이디는 영문만 허용합니다.");
 			id_validate = false;

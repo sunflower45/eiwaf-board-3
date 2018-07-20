@@ -19,6 +19,7 @@ public class ReplyService extends TestService{
 	public List<ReplyVO> list(int replyBno, int start, int end){
 		SqlSession = null;
 		try {
+			// 페이징을 위한 데이터베이스 추출 변수
 			Map<String, Object> map = new HashMap<String,Object>();
 			map.put("replyBno", replyBno);
 			map.put("start", start);

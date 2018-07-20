@@ -19,9 +19,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
 
+// 회원정보 수정 눌렀을때
 $(document).ready(function(){
 	$("#btnUpdate").click(function(){
-		console.log("btnUpdate");
 		if($("#memberPw").val() == "" || $("#memberPw").val() == null){
 			alert("비밀번호 입력은 필수 사항입니다.");
 			return false;
@@ -39,6 +39,8 @@ $(document).ready(function(){
 			alert("잘못된 이메일 형식입니다.");
 			return false;
 		}
+		
+		// 비밀번호 암호화되어 넘어감
 		document.getElementById("memberPw").value = b64_sha1($("#memberPw").val());
 
 		document.form1.action="/member/userUpdate.do";
@@ -47,6 +49,7 @@ $(document).ready(function(){
 	})
 });
 
+// 목록으로 돌아감
 $(document).ready(function(){
 	
 	$("#toList").click(function(){
@@ -61,20 +64,17 @@ $(document).ready(function() {
             $(this).val($(this).val().substring(0, 50));
         }
     });
-});
-$(document).ready(function() {
     $('#memberName').on('keyup', function() {
         if($(this).val().length > 10) {
             $(this).val($(this).val().substring(0, 10));
         }
     });
-});
-$(document).ready(function() {
     $('#memberEmail').on('keyup', function() {
         if($(this).val().length > 100) {
             $(this).val($(this).val().substring(0, 100));
         }
     });
+
 });
 </script>
 <title>회원 정보 수정</title>

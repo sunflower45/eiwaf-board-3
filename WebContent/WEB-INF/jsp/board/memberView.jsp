@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="/js/sha1.min.js"></script>
-
 <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/util.comn.js" charset="utf-8"></script>
@@ -18,6 +17,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
+// 관리자 외의 세션이 접근할 시에 막음
 $(document).ready(function(){
 	if("${sessionScope.memberId}" != "admin"){
 		alert("관리자 외에 접근이 불가합니다.");
@@ -26,6 +26,8 @@ $(document).ready(function(){
 	}
 	
 })
+
+// 회원정보수정 눌렀을때
 $(document).ready(function(){
 	$("#btnUpdate").click(function(){
 		console.log("btnUpdate");
@@ -46,6 +48,8 @@ $(document).ready(function(){
 			alert("잘못된 이메일 형식입니다.");
 			return false;
 		}
+		
+		// 비밀번호 암호화
 		document.getElementById("memberPw").value = b64_sha1($("#memberPw").val());
 
 		document.form1.action="/member/update.do";
@@ -55,7 +59,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 	
-	
+	// 삭제 버튼
 	$("#btnDelete").click(function(){
 		if(confirm("삭제하시겠습니까?")){
 			location.href="${path}/member/delete.do?memberId=${dto.memberId}";

@@ -21,16 +21,22 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script>
 var memberId;
+
+// 로그인 화면으로 돌아가기
 $(document).on('click', '#toLogin', function(){
 	location.href = "${path}/main.do";
 })
+
+// 아이디 찾기 버튼
 $(document).on('click','#findId',function(){
+	// 이메일 form check
 	var pattern=/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 	if(pattern.test($("#memberEmail").val())==false){
 		alert("이메일 형식이 틀립니다.");
 		return false;
 	}
 	
+	// ajax로 아이디 존재여부 체크
 	var f = document.form1;
 	var result = svcf_Ajax("/member/findId.do", f, {
 		async : false,
@@ -40,6 +46,7 @@ $(document).on('click','#findId',function(){
 	$("#memberName").val("");
 	$("#memberEmail").val("");
 });
+
 function idFindActionCallback(status, data){
 	if(data.memberId == null || data.memberId == ""){
 		alert('회원님의 가입 이력이 없습니다.')
@@ -47,6 +54,8 @@ function idFindActionCallback(status, data){
 	alert("회원님의 정보로 등록된 아이디는  "+data.memberId+" 입니다.");
 	}
 }
+
+// 패스워드 찾기 버튼
 $(document).on('click','#findPw',function(){
 	var pattern = /[^(a-zA-Z0-9)]/;
 	var memberId = $("#memberId").val();
@@ -76,34 +85,34 @@ function pwFindActionCallback(status, data){
 		alert('해당되는 비밀번호가 없습니다.');
 	}
 }
+
+// 아이디 찾기에서 이름 10자 이상 막음
 $(document).ready(function() {
     $('#memberName1').on('keyup', function() {
         if($(this).val().length > 10) {
             $(this).val($(this).val().substring(0, 10));
         }
     });
-});
-$(document).ready(function() {
     $('#memberName2').on('keyup', function() {
         if($(this).val().length > 10) {
             $(this).val($(this).val().substring(0, 10));
         }
     });
-});
-$(document).ready(function() {
     $('#memberEmail').on('keyup', function() {
         if($(this).val().length > 100) {
             $(this).val($(this).val().substring(0, 100));
         }
     });
-});
-$(document).ready(function() {
     $('#memberId').on('keyup', function() {
         if($(this).val().length > 30) {
             $(this).val($(this).val().substring(0, 30));
         }
     });
 });
+
+
+
+
 </script>
 </head>
 <body style="background-image:url('/img/background2.JPG');background-size:cover;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)">

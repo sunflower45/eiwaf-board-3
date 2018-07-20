@@ -19,12 +19,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
+
+// 아이디, 이메일, 비밀번호 validation check
 var id_validate = true;
 var pw_validate = false;
 var email_validate = true;
+
+// 메인 페이지로 돌아감
 $(document).on('click', '#toLogin', function(){
 	location.href = "${path}/main.do";
 });
+
+
 $(document).ready(function () {
 	//[1] lblError 레이어 클리어
     $('#memberPw').keyup(function () {
@@ -47,6 +53,8 @@ $(document).ready(function () {
         }
     });
 });
+
+// 아이디 중복확인
 $(document).on('click', '#idCheck', function(){
 	  	var f = document.form1;
     	var result = svcf_Ajax("/member/idCheck.do", f, {
@@ -80,7 +88,11 @@ function chkIdCallback(status, data){
 		}
 	}
 }
+
+// submit 버튼 눌렀을시
 $(document).on('click', '#submitBtn', function(){
+	
+	// 필수 입력사항 check 
 	if($("#memberId").val() == '' || $("#memberId").val() == null){
 		alert('아이디는 필수 입력 사항입니다.');
 		return false;
@@ -117,7 +129,10 @@ $(document).on('click', '#submitBtn', function(){
 		alert("아이디를 제대로 입력해주세요");
 		return false;
 	}else {
+		// 비밀번호 암호화하여 넘어감
 		document.getElementById("memberPw").value = b64_sha1($("#memberPw").val());
+		
+		// ajax로 가입완료
 		var f = document.form1;
 		var result = svcf_Ajax("/member/joinUpdate.do", f, {
 			
@@ -127,45 +142,44 @@ $(document).on('click', '#submitBtn', function(){
 		svcf_SyncCallbackFn(result, joinUpdateCallback);
 	}
 });
+
 function joinUpdateCallback(status, data){
 	alert("가입이 완료되었습니다.");
 	location.href="/main.do";
 }
+
+// 아이디 30자 이상 막음
 $(document).ready(function() {
     $('#memberId').on('keyup', function() {
         if($(this).val().length > 30) {
             $(this).val($(this).val().substring(0, 30));
         }
     });
-});
-$(document).ready(function() {
     $('#memberPw').on('keyup', function() {
         if($(this).val().length > 50) {
             $(this).val($(this).val().substring(0, 50));
         }
     });
-});
-$(document).ready(function() {
     $('#memberPwCheck').on('keyup', function() {
         if($(this).val().length > 50) {
             $(this).val($(this).val().substring(0, 50));
         }
     });
-});
-$(document).ready(function() {
     $('#memberName').on('keyup', function() {
         if($(this).val().length > 10) {
             $(this).val($(this).val().substring(0, 10));
         }
     });
-});
-$(document).ready(function() {
     $('#memberEmail').on('keyup', function() {
         if($(this).val().length > 100) {
             $(this).val($(this).val().substring(0, 100));
         }
     });
 });
+
+
+
+
 </script>
 </head>
 <body style="background-image:url('/img/background2.JPG');background-size:cover;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)">

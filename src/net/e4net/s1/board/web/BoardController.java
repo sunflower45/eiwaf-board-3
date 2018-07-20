@@ -52,7 +52,7 @@ public class BoardController extends PublicController {
 	@Resource(name="uploadPath")
     String uploadPath;
 	
-	
+	// 게시글 리스트 컨트롤러
     @RequestMapping(value="list.do")
 	public ModelAndView list(@RequestParam(defaultValue="board_title") String searchOption,
 			@RequestParam(defaultValue="") String keyword,
@@ -61,11 +61,14 @@ public class BoardController extends PublicController {
     	HttpSession session = request.getSession();
     	String memberName = (String) session.getAttribute("memberName");
     	
+    	// 페이징
     	int count = boardService.countArticle(searchOption, keyword);
     	
     	BoardPager boardPager = new BoardPager(count, curPage);
     	int start = boardPager.getPageBegin();
     	int end = boardPager.getPageEnd();
+    	
+    	
     	List<BoardVO> list = boardService.listAll(start, end, searchOption, keyword);
     	
     	
@@ -89,6 +92,7 @@ public class BoardController extends PublicController {
 		}
 	}
     
+    // 게시글 상세보기
     @RequestMapping(value="view.do", method=RequestMethod.GET)
     public ModelAndView view(@RequestParam int boardBno, @ModelAttribute("rvo") ReplyVO rvo,
     		int curPage, String searchOption, String keyword,
@@ -110,7 +114,7 @@ public class BoardController extends PublicController {
     	}
     }
     
-    
+    // 게시글 쓰기
     @RequestMapping(value="write.do", method=RequestMethod.GET)
     public ModelAndView write(HttpServletRequest request) throws Exception{
     	ModelAndView mav = new ModelAndView();
@@ -124,7 +128,7 @@ public class BoardController extends PublicController {
     }
     
 
-    
+    //게시글 수정
     @RequestMapping(value="modify.do", method=RequestMethod.GET)
     public ModelAndView modify(@RequestParam int boardBno, HttpServletRequest request) throws Exception {
     	BoardVO dto = boardService.read(boardBno);
@@ -140,30 +144,40 @@ public class BoardController extends PublicController {
     }
     
        
-     
+     // 게시글 삽입
     @RequestMapping(value="insert.do", method=RequestMethod.POST)
-    public ModelAndView insert(@RequestParam String boardTitle, @RequestParam String boardContent, @RequestParam MultipartFile file, HttpServletRequest request, HttpSession session) throws Exception{
-    	logger.info("파일 이름 : "+file.getOriginalFilename());
-    	logger.info("파일 크기 : "+file.getSize());
-    	logger.info("컨텐트 타입 : "+file.getContentType());
-    	
-    	String savedName = file.getOriginalFilename();
-    	File target = new File(uploadPath, savedName);
-    	
-    	FileCopyUtils.copy(file.getBytes(), target);
-    	
-    	ModelAndView mav = new ModelAndView("redirect:/board/list.do");
-    	
-    	mav.addObject("savedName", savedName);
+    public ModelAndView insert(@RequestParam String boardTitle, 
+    		@RequestParam String boardContent, @RequestParam(required=false) MultipartFile file,
+    		HttpServletRequest request, HttpSession session) throws Exception{
     	BoardVO vo = new BoardVO();
-    	String writer = (String)session.getAttribute("memberId");
-    	vo.setBoardWriter(writer);
-    	vo.setBoardContent(boardContent);
-    	vo.setBoardTitle(boardTitle);
-    	vo.setBoardFileName(savedName);
-    	vo.setBoardFileSize(file.getSize());
-    	boardService.create(vo, request);
-    	
+    	ModelAndView mav = new ModelAndView("redirect:/board/list.do");
+
+    	if(file.isEmpty() == false || file.getOriginalFilename()!="") {
+    	// 파일 다운로드
+	    	logger.info("파일 이름 : "+file.getOriginalFilename());
+	    	logger.info("파일 크기 : "+file.getSize());
+	    	logger.info("컨텐트 타입 : "+file.getContentType());
+	    	
+	    	String savedName = file.getOriginalFilename();
+	    	File target = new File(uploadPath, savedName);
+	    	
+	    	FileCopyUtils.copy(file.getBytes(), target);
+	    	mav.addObject("savedName", savedName);
+	    	String writer = (String)session.getAttribute("memberId");
+	    	vo.setBoardWriter(writer);
+	    	vo.setBoardContent(boardContent);
+	    	vo.setBoardTitle(boardTitle);
+	    	vo.setBoardFileName(savedName);
+	    	vo.setBoardFileSize(file.getSize());
+	    	boardService.create(vo, request);
+
+	    } else {    	
+	    	String writer = (String)session.getAttribute("memberId");
+	    	vo.setBoardWriter(writer);
+	    	vo.setBoardContent(boardContent);
+	    	vo.setBoardTitle(boardTitle);
+	    	boardService.createNoFile(vo, request);
+	    }
     	Status status = WebUtil.getAttributeStatus(request);
     	if(status.isOk()) {
     		return getOkModelAndView(mav, status);
@@ -171,7 +185,36 @@ public class BoardController extends PublicController {
     		return getFailModelAndView(mav, status);
     	}
     }
-    
+    // 게시글 수정
+    @RequestMapping(value="update.do", method=RequestMethod.POST)
+    public ModelAndView update(@RequestParam int boardBno,
+    		@RequestParam  String boardTitle, @RequestParam String boardContent,
+    		@RequestParam String boardWriter, @RequestParam(required=false) MultipartFile file) throws Exception{
+    	
+    	String savedName = file.getOriginalFilename();
+		File target = new File(uploadPath, savedName);
+		System.out.println("file : "+savedName);
+		BoardVO vo = new BoardVO();
+		if(savedName!="" || file.isEmpty()==false) {
+			System.out.println("ggggggggggggggg");
+			FileCopyUtils.copy(file.getBytes(), target);
+			vo.setBoardFileName(savedName);
+			vo.setBoardFileSize(file.getSize());
+	    	vo.setBoardBno(boardBno);
+	    	vo.setBoardTitle(boardTitle);
+	    	vo.setBoardContent(boardContent);
+	    	vo.setBoardWriter(boardWriter);
+	    	boardService.update(vo);
+		}else {
+	    	vo.setBoardBno(boardBno);
+	    	vo.setBoardTitle(boardTitle);
+	    	vo.setBoardContent(boardContent);
+	    	vo.setBoardWriter(boardWriter);
+	    	boardService.updateNoFile(vo);
+		}
+    	return getOkModelAndView("redirect:/board/list.do");
+    }
+    // 파일 다운로드
     @ResponseBody
     @RequestMapping(value="downloadFile.do")
     public ResponseEntity<byte[]> downloadFile(@RequestParam String fileName, HttpServletResponse response) throws Exception {
@@ -195,12 +238,9 @@ public class BoardController extends PublicController {
     	return entity;
     }
     
-    @RequestMapping(value="update.do", method=RequestMethod.POST)
-    public ModelAndView update(@ModelAttribute BoardVO vo) throws Exception{
-    	boardService.update(vo);
-    	return getOkModelAndView("redirect:/board/list.do");
-    }
+
     
+    //게시글 삭제
     @RequestMapping("delete.do")
     public ModelAndView delete(@RequestParam int boardBno) throws Exception{
     	boardService.delete(boardBno);

@@ -16,39 +16,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	function gfn_isNull(str) {
-	    if (str == null) return true;
-	    if (str == "NaN") return true;
-	    if (new String(str).valueOf() == "undefined") return true;   
-	    var chkStr = new String(str);
-	    if( chkStr.valueOf() == "undefined" ) return true;
-	    if (chkStr == null) return true;   
-	    if (chkStr.toString().length == 0 ) return true;  
-	    return false;
-	}
-	
-	
-	function ComSubmit(opt_formId) {
-	    this.formId = gfn_isNull(opt_formId) == true ? "commonForm" : opt_formId;
-	    this.url = "";
-	     
-	    
-	     
-	    this.setUrl = function setUrl(url){
-	        this.url = url;
-	    };
-	     
-	    this.addParam = function addParam(key, value){
-	        $("#"+this.formId).append($("<input type='hidden' name='"+key+"' id='"+key+"' value='"+value+"' >"));
-	    };
-	     
-	    this.submit = function submit(){
-	        var frm = $("#"+this.formId)[0];
-	        frm.action = this.url;
-	        frm.method = "post";
-	        frm.submit();  
-	    };
-	}
+
 	$(document).ready(function() {
 	    $('#replyText').on('keyup', function() {
 	        if($(this).val().length > 4000) {
@@ -101,6 +69,7 @@
 		});
 		svcf_SyncCallbackFn(result, replyJsonCallback);
 	}
+	
 	function replyJsonCallback(status, data){
 		alert('댓글이 등록되었습니다.');
 		document.getElementById("replyText").value = "";
@@ -175,7 +144,7 @@
 	<div>
 		<input type="hidden" name="boardBno" value="${dto.boardBno}">
 		<input type="hidden" name="replyer" value="${sessionScope.memberId}">
-		<c:if test="${sessionScope.memberName == dto.boardWriter}">
+		<c:if test="${sessionScope.memberId == dto.boardWriter}">
 			<button type="button"  style="margin-left:300px" id="btnUpdate" class="btn btn-success">수정</button>
 			<button type="button" id = "btnDelete" class="btn btn-success">삭제</button>
 		</c:if>
@@ -184,7 +153,7 @@
 <div style="width:650px;text-align:center;">
 
 	<br>
-	<c:if test="${sessionScope.memberId != null}">
+	<c:if test="${sessionScope.memberId != null || sessionScope.memberId == ''}">
 		<textarea rows="5" style="margin-left:100px" cols="80" name="replyText" id="replyText" class="form-control" placeholder="댓글을 작성해주세요"></textarea>
 		<br>
 		<button type="button" id="btnReply" style="margin-left:150px" class="btn btn-success" >댓글 작성</button>

@@ -26,6 +26,11 @@
 		INSERT INTO tbl_board(board_bno, board_title, board_content, board_writer, board_file_name, board_file_size)
 		VALUES(BOARD_NUM.NEXTVAL, #{boardTitle},#{boardContent}, #{boardWriter}, #{boardFileName}, #{boardFileSize})
 	</insert>
+	<insert id="insertNoFile">
+		INSERT INTO tbl_board(board_bno, board_title, board_content, board_writer)
+		VALUES(BOARD_NUM.NEXTVAL, #{boardTitle},#{boardContent}, #{boardWriter})
+	</insert>
+	
 	<select id="view" resultType="net.e4net.s1.board.vo.BoardVO">
 		SELECT BOARD_BNO as boardBno
 				, BOARD_TITLE as boardTitle
@@ -43,7 +48,17 @@
 	</update>
 	
 	<update id="updateArticle">
-		UPDATE tbl_board SET board_title = #{boardTitle}, board_content = #{boardContent}, board_writer=#{boardWriter}
+		UPDATE tbl_board SET board_title = #{boardTitle},
+		 board_content = #{boardContent}, 
+		 board_writer = #{boardWriter},
+		 board_file_name = #{boardFileName},
+		 board_file_size = #{boardFileSize}
+		WHERE board_bno = #{boardBno}
+	</update>
+		<update id="updateNoFileArticle">
+		UPDATE tbl_board SET board_title = #{boardTitle},
+		 board_content = #{boardContent}, 
+		 board_writer = #{boardWriter}
 		WHERE board_bno = #{boardBno}
 	</update>
 	<delete id="deleteArticle">

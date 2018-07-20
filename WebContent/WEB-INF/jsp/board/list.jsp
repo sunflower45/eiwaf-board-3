@@ -82,7 +82,7 @@
 				<td><c:out value="${row.boardBno}"></c:out></td>
 				<td><a href="${path}/board/view.do?boardBno=${row.boardBno}&curPage=${map.boardPager.curPage}&searchOption=${map.searchOption}&keyword=${map.keyword}">${row.boardTitle}
 				<c:if test="${row.boardReplyCnt > 0}">
-					<span style="color:red;"><c:out value="${row.boardReplyCnt}"></c:out></span>
+					<span style="color:red;">(<c:out value="${row.boardReplyCnt}"></c:out>)</span>
 				</c:if>
 				</a>
 				</td>

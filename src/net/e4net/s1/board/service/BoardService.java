@@ -23,10 +23,14 @@ public class BoardService extends TestService {
 		SqlSession = null;
 		try {
 			SqlSession = openSession(true);
+			
+			// 게시판 search option을 위한 변수
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("searchOption", searchOption);
 			map.put("keyword", keyword);
+			
 			int i = (int) SqlSession.selectOne("BoardService.countArticle", map);
+			
 			SqlSession.commit();
 			return i;
 		} catch (Exception e) {
@@ -53,6 +57,24 @@ public class BoardService extends TestService {
 			if(SqlSession != null) SqlSession.close();
 		}
 	}
+	public void createNoFile(BoardVO vo, HttpServletRequest request) throws Exception {
+		SqlSession = null;
+		try {
+			SqlSession = openSession(true);
+			SqlSession.insert("BoardService.insertNoFile", vo);
+			SqlSession.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			
+		} finally {
+			if(SqlSession != null) SqlSession.close();
+		}
+	}
+	
+	
+	
 	
 	public BoardVO read(int boardBno) throws Exception{
 		SqlSession = null;
@@ -77,6 +99,7 @@ public class BoardService extends TestService {
 		SqlSession = null;
 		try {
 			SqlSession = openSession(true);
+			System.out.println("update vo :"+vo);
 			SqlSession.update("BoardService.updateArticle", vo);
 			SqlSession.commit();
 			
@@ -88,6 +111,23 @@ public class BoardService extends TestService {
 			if(SqlSession != null) SqlSession.close();
 		}
 	}
+	public void updateNoFile(BoardVO vo) throws Exception{
+		SqlSession = null;
+		try {
+			SqlSession = openSession(true);
+			System.out.println("update vo :"+vo);
+			SqlSession.update("BoardService.updateNoFileArticle", vo);
+			SqlSession.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			
+		} finally {
+			if(SqlSession != null) SqlSession.close();
+		}
+	}
+	
 	
 	public void delete(int boardBno) throws Exception{
 		SqlSession = null;
@@ -111,11 +151,13 @@ public class BoardService extends TestService {
 		SqlSession = null;
 		try {
 			SqlSession = openSession(true);
+			// search option에 따른 데이터베이스 추출 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("searchOption", searchOption);
 			map.put("keyword", keyword);
 			map.put("start", start);
 			map.put("end", end);
+			
 			List<BoardVO> vo = (List<BoardVO>)SqlSession.selectList("BoardService.listAll", map);
 			SqlSession.commit();
 			return vo;

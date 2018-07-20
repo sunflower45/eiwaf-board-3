@@ -14,73 +14,72 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
+$(document).ready(function(){
+	// 삭제 버튼
+	$("#btnDelete").click(function(){
+		if(confirm("삭제하시겠습니까?")){
+			document.form1.action="${path}/board/delete.do";
+			document.form1.submit();
+		}
+	});
 	
-	$(document).ready(function(){
-		$("#btnDelete").click(function(){
-			if(confirm("삭제하시겠습니까?")){
-				document.form1.action="${path}/board/delete.do";
-				document.form1.submit();
-			}
-		});
-		
-		$("#btnToList").click(function(){
-			location.href = "${path}/board/list.do";
-		})
-		
-		
-		
-		$("#btnUpdete").click(function(){
-            alert("수정되었습니다.");
-            var title = $("#boardTitle").val();
-            var content = $("#boardContent").val();
-            var writer = $("#boardWriter").val();
-            if(title == ""){
-                alert("제목을 입력하세요");
-                document.form1.title.focus();
-                return;
-            }
-            if(content == ""){
-                alert("내용을 입력하세요");
-                document.form1.content.focus();
-                return;
-            }
-            if(writer == ""){
-                alert("이름을 입력하세요");
-                document.form1.writer.focus();
-                return;
-            }
-            document.form1.action="${path}/board/update.do"
-            // 폼에 입력한 데이터를 서버로 전송
-            document.form1.submit();
-        });
+	// 목록으로 돌아가기
+	$("#btnToList").click(function(){
+		location.href = "${path}/board/list.do";
 	})
+	
+	
+	// 수정 버튼
+	$("#btnUpdete").click(function(){
+           alert("수정되었습니다.");
+           var title = $("#boardTitle").val();
+           var content = $("#boardContent").val();
+           var writer = $("#boardWriter").val();
+           if(title == ""){
+               alert("제목을 입력하세요");
+               document.form1.title.focus();
+               return;
+           }
+           if(content == ""){
+               alert("내용을 입력하세요");
+               document.form1.content.focus();
+               return;
+           }
+           if(writer == ""){
+               alert("이름을 입력하세요");
+               document.form1.writer.focus();
+               return;
+           }
+           document.form1.action="${path}/board/update.do"
+           // 폼에 입력한 데이터를 서버로 전송
+           document.form1.submit();
+       });
+})
 $(document).ready(function() {
     $('#boardTitle').on('keyup', function() {
         if($(this).val().length > 1000) {
             $(this).val($(this).val().substring(0, 1000));
         }
     });
-});
-$(document).ready(function() {
     $('#boardContent').on('keyup', function() {
         if($(this).val().length > 2000) {
             $(this).val($(this).val().substring(0, 2000));
         }
     });
-});	
+});
 </script>
 </head>
 <body style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%)">
 <h2>게시글 보기</h2>
-<form name="form1" method="post">
+<form name="form1" method="post" enctype="multipart/form-data" >
 <table class="table" style="width:800px">
 	<tr>
 		<td>작성일자</td>
-		<td>${dto.boardRegdate}</td>
+		<td><c:out value="${dto.boardRegdate}"></c:out></td>
 	</tr>
 	<tr>
 		<td>조회수</td>
-		<td>${dto.boardViewcnt}</td>
+		<td><c:out value="${dto.boardViewcnt}"></c:out></td>
 	</tr>
 	<tr>
 		<td>제목</td>
@@ -91,12 +90,18 @@ $(document).ready(function() {
 		<td><textarea name="boardContent"  class="form-control" id="boardContent" rows="4" cols="80" placeholder="내용을 입력해주세요">${dto.boardContent}</textarea></td>
 	</tr>
 	<tr>
+		<td>파일 업로드</td>
+		<td>
+			<input type="file" class="file" id="file" name="file" placeholder="파일 선택">
+		</td>
+	</tr>
+	<tr>
 		<td>이름</td>
 		<td><c:out value="${dto.boardWriter}"></c:out><input type="hidden" id="boardWriter" name="boardWriter" value="${dto.boardWriter}"></td>
 	</tr>
 </table>
 	<div>
-		<input type="hidden" name="boardBno" value="${dto.boardBno}">
+		<input type="hidden" name="boardBno" id="boardBno" value="${dto.boardBno}">
 		<button type="button" id="btnUpdete" class="btn btn-success">수정</button>
 		<button type="button" id = "btnDelete" class="btn btn-success">삭제</button>
 		<button type="button" id="btnToList" class="btn btn-success">목록으로</button>

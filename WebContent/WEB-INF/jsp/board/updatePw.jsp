@@ -39,6 +39,8 @@ $(document).ready(function () {
         }
     });
 });
+
+// 비밀번호 업데이트 전에 아이디 인증
 $(document).on('click', '#idCheck', function(){
   	var f = document.form1;
 	var result = svcf_Ajax("/member/idCheck.do", f, {
@@ -48,6 +50,7 @@ $(document).on('click', '#idCheck', function(){
 	
 	svcf_SyncCallbackFn(result, chkIdCallback);		
 });
+
 function chkIdCallback(status, data){
 	var pattern = /[^(a-zA-Z0-9)]/;
 	
@@ -63,7 +66,7 @@ function chkIdCallback(status, data){
 	}
 }
 $(document).on('click', '#submitBtn', function(){
-	
+	//validation check
 	if($("#memberId").val() == ''|| $("#memberId").val() == null){
 		alert('아이디는 필수 입력 사항입니다.');
 		return false;
@@ -87,7 +90,9 @@ $(document).on('click', '#submitBtn', function(){
 		alert("아이디를 제대로 입력하세요.")
 		return false;
 	} else {
+		// 비밀번호 암호화
 		document.getElementById("memberPw").value = b64_sha1($("#memberPw").val());
+		// ajax로 비밀번호 업데이트
 		var f = document.form1;
 		var result = svcf_Ajax("/member/updatePwMember.do", f, {
 			
@@ -98,7 +103,6 @@ $(document).on('click', '#submitBtn', function(){
 	}
 });
 function joinUpdateCallback(status, data){
-	console.log(data.memberPw);
 	alert("새 비밀번호가 변경되었습니다..");
 	location.href="/main.do";
 }

@@ -5,7 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="/js/sha1.min.js"></script>
-
 <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/eiwaf/eiwaf-1.0.0.js" charset="utf-8"></script>
 <script type="text/javascript" src="/js/util.comn.js" charset="utf-8"></script>
@@ -51,8 +50,6 @@ $(document).ready(function() {
             $(this).val($(this).val().substring(0, 30));
         }
     });
-});
-$(document).ready(function() {
     $('#memberPw').on('keyup', function() {
         if($(this).val().length > 50) {
             $(this).val($(this).val().substring(0, 50));
@@ -68,7 +65,7 @@ $(document).ready(function() {
 <c:when test="${msg == 'success'}"> 
 	<h2 class="text-center">Login ${msg}</h2>
 	아이디 : ${memberId}<br>
-	닉네임 : ${memberName}<br><br>
+	이름 : ${memberName}<br><br>
 	<button id="btnLogout" class="btn btn-success">로그아웃</button>
 	<button id="btnBoard" class="btn btn-success">게시판</button>
 	<c:if test="${memberId == 'admin'}">

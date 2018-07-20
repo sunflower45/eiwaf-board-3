@@ -14,6 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script>
+// validation
 $(document).ready(function(){
 	$("#btnSave").click(function(){
 		var title = $("#boardTitle").val();
@@ -34,10 +35,10 @@ $(document).ready(function(){
 			location.href="/main.do";
 			return false;
 		}
-		if($("#file").val() == null ||$("#file").val() == "" ){
+		/* if($("#file").val() == null ||$("#file").val() == "" ){
 			alert("파일 입력은 필수입니다.");
 			return false;
-		}
+		} */
 		document.form1.submit();
 	});
 	$("#toList").click(function(){
@@ -51,8 +52,6 @@ $(document).ready(function() {
             $(this).val($(this).val().substring(0, 1000));
         }
     });
-});
-$(document).ready(function() {
     $('#boardContent').on('keyup', function() {
         if($(this).val().length > 2000) {
             $(this).val($(this).val().substring(0, 2000));
